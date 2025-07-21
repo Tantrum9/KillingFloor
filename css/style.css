@@ -1,0 +1,41 @@
+body {
+  background: #111;
+  color: #eee;
+  font-family: 'Press Start 2P', monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+}
+header {
+  width: 100%;
+  background: #220;
+  padding: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+main {
+  display: flex;
+  max-width: 1200px;
+  width: 100%;
+  margin: 2em;
+  gap: 2em;
+}
+#planner {
+  flex: 2;
+}
+.tier {
+  margin-bottom: 1.5em;
+}
+.skill-btn {
+  display: inline-block;
+  cursor: pointer;
+  margin: 0.5em;
+}
+#summary {
+  flex: 1;
+  background: #222;
+  padding: 1em;
+  border: 1px solid #440;
+}
