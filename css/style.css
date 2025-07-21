@@ -1,41 +1,72 @@
+* { box-sizing: border-box; }
+
 body {
   background: #111;
   color: #eee;
   font-family: 'Press Start 2P', monospace;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0;
+  margin: 0; padding: 0;
 }
+
 header {
-  width: 100%;
-  background: #220;
-  padding: 1em;
   display: flex;
-  justify-content: space-between;
+  gap: 1em;
   align-items: center;
+  padding: 1rem;
+  background: #220;
 }
+
 main {
   display: flex;
-  max-width: 1200px;
-  width: 100%;
-  margin: 2em;
-  gap: 2em;
+  padding: 1rem;
 }
-#planner {
-  flex: 2;
-}
-.tier {
-  margin-bottom: 1.5em;
-}
-.skill-btn {
-  display: inline-block;
-  cursor: pointer;
-  margin: 0.5em;
-}
-#summary {
+
+.column {
   flex: 1;
+  margin: 0 0.5rem;
+}
+
+.column h2 {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  min-height: 600px;
+}
+
+.skill-btn {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+}
+
+.btn-img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.skill-label {
+  position: absolute;
+  bottom: 2px;
+  width: 100%;
+  text-align: center;
+  font-size: 8px;
+  pointer-events: none;
+}
+
+#summary {
+  width: 250px;
+  padding: 1rem;
   background: #222;
-  padding: 1em;
-  border: 1px solid #440;
+  margin-left: 1rem;
+}
+
+#summary ul {
+  padding: 0;
+  list-style: none;
 }
