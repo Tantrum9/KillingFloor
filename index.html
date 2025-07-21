@@ -8,21 +8,18 @@
 </head>
 <body>
   <header>
-    <h1>Killing Floor 3 — Commando Perk Planner</h1>
+    <h1>Commando Perk Planner</h1>
     <button id="resetBtn">Reset All</button>
+    <select id="classSelect"><option value="commando">Commando</option></select>
   </header>
-
   <main>
-    <div id="planner">
-      <!-- Skill tiers will be injected here -->
+    <div id="columns">
+      <div class="column" id="passives"><h2>Passives</h2><div class="slots"></div></div>
+      <div class="column" id="throwables"><h2>Throwables</h2><div class="slots"></div></div>
+      <div class="column" id="gadgets"><h2>Gadgets</h2><div class="slots"></div></div>
     </div>
-
-    <aside id="summary">
-      <h2>Build Summary</h2>
-      <ul id="summaryList"></ul>
-    </aside>
+    <aside id="summary"><h2>Build Summary</h2><ul id="summaryList"></ul></aside>
   </main>
-
   <script src="js/script.js"></script>
 </body>
 </html>
