@@ -1,6 +1,5 @@
-const tiers = [5, 10, 15, 20, 25, 30]; // Commando perk levels
+const tiers = [5, 10, 15, 20, 25, 30];
 
-// Placeholder skills (to update with real data later)
 const skillsData = {
   5: ['Skill A', 'Skill B'],
   10: ['Skill C', 'Skill D'],
@@ -15,35 +14,50 @@ let state = JSON.parse(localStorage.getItem('kf3-commando')) || {};
 const planner = document.getElementById('planner');
 const summaryList = document.getElementById('summaryList');
 
-// Build planner UI
-tiers.forEach(level => {
-  const tierDiv = document.createElement('div');
-  tierDiv.className = 'tier';
-  tierDiv.innerHTML = `<h3>Level ${level}</h3>`;
-  
-  skillsData[level].forEach(skill => {
-    const btn = document.createElement('div');
-    btn.className = 'skill-btn';
-    btn.dataset.level = level;
-    btn.dataset.skill = skill;
-    btn.dataset.proficiency = state[`${level}:${skill}`] || 0;
-    btn.innerText = `${skill} (Prof: ${btn.dataset.proficiency})`;
-    
-    btn.onclick = () => {
-      state[`${level}:${skill}`] = (+btn.dataset.proficiency + 1) % 4;
-      btn.dataset.proficiency = state[`${level}:${skill}`];
-      btn.innerText = `${skill} (Prof: ${btn.dataset.proficiency})`;
-      updateSummary();
-      persist();
-    };
+function loadPlanner() {
+  planner.innerHTML = '';
+  tiers.forEach(level => {
+    const tierDiv = document.createElement('div');
+    tierDiv.className = 'tier';
+    tierDiv.innerHTML = `<h3>Level ${level}</h3>`;
 
-    tierDiv.appendChild(btn);
+    skillsData[level].forEach(skill => {
+      const key = `${level}:${skill}`;
+      const currentProf = state[key] || 0;
+
+      const btn = document.createElement('div');
+      btn.className = 'skill-btn';
+      btn.dataset.level = level;
+      btn.dataset.skill = skill;
+      btn.dataset.proficiency = currentProf;
+
+      btn.innerHTML = `
+        <img src="assets/buttons/unchecked.svg" class="btn-img unchecked" />
+        <img src="assets/buttons/prof${currentProf}.svg" class="btn-img prof" />
+        <span class="skill-label">${skill}</span>
+      `;
+
+      btn.onclick = () => {
+        let newProf = (+btn.dataset.proficiency + 1) % 4;
+        btn.dataset.proficiency = newProf;
+        state[key] = newProf;
+
+        const profImg = btn.querySelector('.prof');
+        profImg.src = `assets/buttons/prof${newProf}.svg`;
+
+        persist();
+        updateSummary();
+      };
+
+      tierDiv.appendChild(btn);
+    });
+
+    planner.appendChild(tierDiv);
   });
 
-  planner.appendChild(tierDiv);
-});
+  updateSummary();
+}
 
-// Summary + Pagination
 function updateSummary() {
   summaryList.innerHTML = '';
   Object.entries(state).forEach(([key, prof]) => {
@@ -60,15 +74,10 @@ function persist() {
   localStorage.setItem('kf3-commando', JSON.stringify(state));
 }
 
-// Reset button
 document.getElementById('resetBtn').onclick = () => {
   state = {};
   localStorage.removeItem('kf3-commando');
-  document.querySelectorAll('.skill-btn').forEach(btn => {
-    btn.dataset.proficiency = 0;
-    btn.innerText = `${btn.dataset.skill} (Prof: 0)`;
-  });
-  updateSummary();
+  loadPlanner();
 };
 
-updateSummary();
+loadPlanner();
